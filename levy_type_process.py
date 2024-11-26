@@ -70,7 +70,7 @@ class LevyTypeProcess(ABC):
         h, eps = self.config.h, self.config.eps
         return (t * (1 - eps) * (h**eps)) ** (1 / (1 - eps))
 
-    def generate_jump_times(self, t: float, sign: int) -> np.ndarray:
+    def generate_jump_times(self, t: float) -> np.ndarray:
         jump_times = []
         current_time = self.inverse_lambda(self.rng.exponential())
         while 0 < current_time < t:

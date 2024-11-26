@@ -18,7 +18,7 @@ class LevySimulator:
         times = np.linspace(0, self.config.total_time, self.config.num_steps)
         jumps = {}
         for sign in (1, -1):
-            jump_times = self.process.generate_jump_times(self.config.total_time, sign)
+            jump_times = self.process.generate_jump_times(self.config.total_time)
             jumps.update(
                 {t: self.process.sample_large_jump(t, sign) for t in jump_times}
             )
