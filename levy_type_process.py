@@ -72,10 +72,12 @@ class LevyTypeProcess(ABC):
 
     def generate_jump_times(self, t: float) -> np.ndarray:
         jump_times = []
-        current_time = self.inverse_lambda(self.rng.exponential())
+        accumulated_exponential = self.rng.exponential()
+        current_time = self.inverse_lambda(accumulated_exponential)
         while 0 < current_time < t:
             jump_times.append(current_time)
-            current_time += self.inverse_lambda(self.rng.exponential())
+            accumulated_exponential += self.rng.exponential()
+            current_time = self.inverse_lambda(accumulated_exponential)
         return np.array(jump_times)
 
     def compute_small_jump_variance(
