@@ -71,6 +71,7 @@ class LevyTypeProcess(ABC):
         return (t * (1 - eps) * (h**eps)) ** (1 / (1 - eps))
 
     def generate_jump_times(self, t: float) -> np.ndarray:
+        """Inverse time transformation method."""
         jump_times = []
         accumulated_exponential = self.rng.exponential()
         current_time = self.inverse_lambda(accumulated_exponential)
