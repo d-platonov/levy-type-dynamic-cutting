@@ -60,7 +60,7 @@ class LevyTypeProcess(ABC):
     def inverse_large_jump_cdf(self, u: float, t: float, sign: int) -> float:
         h, eps = self.config.h, self.config.eps
         if u <= self.tau((t * h) ** eps, sign):
-            return self.tau((eps / (u * (t * h) ** (1 - eps))) ** (1 / (eps - 1)), sign)
+            return self.tau((eps / (u * (t * h) ** (1 - eps))) ** (eps / (eps - 1)), sign)
         return self.tau((1 - eps) * ((t * h) ** eps) / (1 - u), sign)
 
     def sample_large_jump(self, t: float, sign: int):
@@ -68,7 +68,7 @@ class LevyTypeProcess(ABC):
 
     def inverse_lambda(self, t: float) -> float:
         h, eps = self.config.h, self.config.eps
-        return (t * (1 - eps) * (h**eps)) ** (1 / (1 - eps))
+        return (t * (1 - eps) * (h ** eps)) ** (1 / (1 - eps))
 
     def generate_jump_times(self, t: float) -> np.ndarray:
         """Inverse time transformation method."""
@@ -81,9 +81,7 @@ class LevyTypeProcess(ABC):
             current_time = self.inverse_lambda(accumulated_exponential)
         return np.array(jump_times)
 
-    def compute_small_jump_variance(
-        self, x_prev: float, t_prev: float, t_curr: float
-    ) -> float:
+    def compute_small_jump_variance(self, x_prev: float, t_prev: float, t_curr: float) -> float:
         h, eps = self.config.h, self.config.eps
 
         def integrand(z: float, s: float) -> float:
