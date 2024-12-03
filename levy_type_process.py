@@ -59,8 +59,8 @@ class LevyTypeProcess(ABC):
 
     def inverse_large_jump_cdf(self, u: float, t: float, sign: int) -> float:
         h, eps = self.config.h, self.config.eps
-        if self.levy_tail_integral(u, sign) <= (t * h) ** (-eps):
-            return self.tau((eps / (u * (t * h) ** (1 - eps))) ** (eps / (eps - 1)), sign)
+        if u >= eps:
+            return self.tau((t * h) ** eps * (u / eps) ** (eps / (1 - eps)), sign)
         return self.tau((1 - eps) * ((t * h) ** eps) / (1 - u), sign)
 
     def sample_large_jump(self, t: float, sign: int):
