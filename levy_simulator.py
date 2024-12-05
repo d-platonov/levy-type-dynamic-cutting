@@ -11,7 +11,7 @@ class LevySimulator:
     def __init__(self, process: LevyTypeProcess):
         self.process = process
         self.config = process.config
-        self.rng = np.random.default_rng(process.config.random_seed)
+        self.rng = process.rng
 
     def prepare_timeline(self) -> tuple[np.ndarray, dict[np.ndarray, np.ndarray]]:
         """Prepare time points and jumps for simulation."""
