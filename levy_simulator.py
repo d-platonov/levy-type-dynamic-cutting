@@ -8,8 +8,9 @@ warnings.filterwarnings("ignore")
 
 
 class LevySimulator:
-    def __init__(self, process: LevyTypeProcess):
+    def __init__(self, process: LevyTypeProcess, approximate_small_jumps: bool):
         self.process = process
+        self.approximate_small_jumps = approximate_small_jumps
 
     def prepare_timeline(self) -> tuple[np.ndarray, dict[np.ndarray, np.ndarray]]:
         """Prepare time points and jumps for simulation."""
@@ -41,8 +42,11 @@ class LevySimulator:
                 * self.process.rng.standard_normal()
             )
 
-            small_jump_var = self.process.compute_small_jump_variance(x_prev, t_prev, t_curr)
-            small_jump_increment = (np.sqrt(small_jump_var) * self.process.rng.standard_normal())
+            if self.approximate_small_jumps:
+                small_jump_var = self.process.compute_small_jump_variance(x_prev, t_prev, t_curr)
+                small_jump_increment = (np.sqrt(small_jump_var) * self.process.rng.standard_normal())
+            else:
+                small_jump_increment = 0
 
             if t_curr in jumps_dict:
                 large_jump_increment = self.process.jump_coefficient(t_prev, x_prev, jumps_dict.get(t_curr))

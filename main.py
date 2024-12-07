@@ -29,7 +29,7 @@ def main():
 
     process = TemperedStableLevyTypeProcess(config=config, alpha=0.75, c=1)
 
-    simulator = LevySimulator(process)
+    simulator = LevySimulator(process=process, approximate_small_jumps=False)
 
     time_grid, x_values = simulator.simulate_path()
 
