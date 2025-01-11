@@ -1,8 +1,7 @@
-import attrs
-from attrs import validators
+from attrs import validators, field, define
 
 
-@attrs.define
+@define
 class SimulationConfig:
     """
     Configuration parameters for simulating a Levy-type process.
@@ -21,14 +20,14 @@ class SimulationConfig:
         min_value (float): A small value to avoid infinities at 0.
     """
 
-    total_time: float = attrs.field(validator=[validators.instance_of(float), validators.gt(0)])
-    num_steps: int = attrs.field(validator=[validators.instance_of(int), validators.gt(0)])
-    h: float = attrs.field(validator=[validators.instance_of(float), validators.gt(0)])
-    eps: float = attrs.field(validator=[validators.instance_of(float), validators.gt(0), validators.lt(1)])
-    x_0: float = attrs.field(default=0.0, validator=validators.instance_of(float))
-    random_seed: int = attrs.field(default=42, validator=validators.instance_of(int))
-    num_precompute_points: int = attrs.field(default=100, validator=[validators.instance_of(int), validators.gt(0)])
-    num_ds_points: int = attrs.field(default=25, validator=[validators.instance_of(int), validators.gt(0)])
-    num_dz_points: int = attrs.field(default=25, validator=[validators.instance_of(int), validators.gt(0)])
-    brentq_upper_bound: float = attrs.field(default=10.0, validator=validators.instance_of(float))
-    min_value: float = attrs.field(default=1e-12, validator=validators.instance_of(float))
+    total_time: float = field(validator=[validators.instance_of(float), validators.gt(0)])
+    num_steps: int = field(validator=[validators.instance_of(int), validators.gt(0)])
+    h: float = field(validator=[validators.instance_of(float), validators.gt(0)])
+    eps: float = field(validator=[validators.instance_of(float), validators.gt(0), validators.lt(1)])
+    x_0: float = field(default=0.0, validator=validators.instance_of(float))
+    random_seed: int = field(default=42, validator=validators.instance_of(int))
+    num_precompute_points: int = field(default=100, validator=[validators.instance_of(int), validators.gt(0)])
+    num_ds_points: int = field(default=25, validator=[validators.instance_of(int), validators.gt(0)])
+    num_dz_points: int = field(default=25, validator=[validators.instance_of(int), validators.gt(0)])
+    brentq_upper_bound: float = field(default=10.0, validator=validators.instance_of(float))
+    min_value: float = field(default=1e-12, validator=validators.instance_of(float))
